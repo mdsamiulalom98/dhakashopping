@@ -21,8 +21,8 @@
     <!-- toastr css -->
     <link rel="stylesheet" href="{{ asset('public/backEnd/') }}/assets/css/toastr.min.css" />
     <link rel="stylesheet" href="{{ asset('public/frontEnd/css/wsit-menu.css') }}" />
-    <link rel="stylesheet" href="{{ asset('public/frontEnd/css/style.css?v=1.0.0') }}" />
-    <link rel="stylesheet" href="{{ asset('public/frontEnd/css/responsive.css?v=1.0.0') }}" />
+    <link rel="stylesheet" href="{{ asset('public/frontEnd/css/style.css?v=1.0.1') }}" />
+    <link rel="stylesheet" href="{{ asset('public/frontEnd/css/responsive.css?v=1.0.1') }}" />
     <script src="{{ asset('public/frontEnd/js/jquery-3.7.1.min.js') }}"></script>
     @foreach ($pixels as $pixel)
         <!-- Facebook Pixel Code -->
@@ -381,10 +381,14 @@
                                     <a href="{{ route('home') }}">
                                         <img src="{{ asset($generalsetting->dark_logo) }}" alt="" />
                                     </a>
-                                    <p>Connect our specialist doctor at any time from any where</p>
+                                    <p>Address: {{ $contact->address }}</p>
+                                    <p>Hotline: <a href="tel:{{ $contact->hotline }}"
+                                            class="footer-hotlint">{{ $contact->hotline }}</a></p>
+                                    <p>Whatsapp: <a href="https://wa.me/{{ $contact->whatsapp }}"
+                                            class="footer-hotlint">{{ $contact->whatsapp }}</a></p>
 
                                 </div>
-                                
+
                             </div>
                             <!-- col end -->
                             <div class="col-sm-3">
@@ -398,16 +402,7 @@
                                         @endforeach
                                     </ul>
                                 </div>
-                                <div class="footer-menu">
-                                    <ul>
-                                        <li class="title "><a>Useful Link</a></li>
-                                        @foreach ($pages as $page)
-                                            <li><a
-                                                    href="{{ route('page', ['slug' => $page->slug]) }}">{{ $page->name }}</a>
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                </div>
+
                             </div>
                             <!-- col end -->
                             <div class="col-sm-3">
@@ -425,16 +420,6 @@
 
                             <!-- col end -->
                             <div class="col-sm-3">
-                                <div class="footer-menu">
-                                    <ul>
-                                        <li class="title "><a>Contact Info</a></li>
-                                    </ul>
-                                    <p>Address: {{ $contact->address }}</p>
-                                    <p>Hotline: <a href="tel:{{ $contact->hotline }}"
-                                            class="footer-hotlint">{{ $contact->hotline }}</a></p>
-                                    <p>Whatsapp: <a href="https://wa.me/{{ $contact->whatsapp }}"
-                                            class="footer-hotlint">{{ $contact->whatsapp }}</a></p>
-                                </div>
                                 <div class="footer-menu">
                                     <ul class="social_link">
                                         @foreach ($socialicons as $value)

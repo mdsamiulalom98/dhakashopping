@@ -221,6 +221,10 @@
                         items: 4,
                         nav: false,
                     },
+                    1400: {
+                        items: 6,
+                        nav: false,
+                    },
                 },
             });
 

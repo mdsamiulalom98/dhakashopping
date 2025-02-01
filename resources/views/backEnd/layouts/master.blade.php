@@ -292,7 +292,7 @@
                                         <a href="{{ route('brands.index') }}"><i data-feather="minus"></i>
                                             Brands</a>
                                     </li>
-                                   
+
                                     <li>
                                         <a href="{{ route('sizes.index') }}"><i data-feather="minus"></i>
                                             Sizes</a>
@@ -389,6 +389,27 @@
                                 </ul>
                             </div>
                         </li>
+                        <!-- nav items -->
+                        <li>
+                            <a href="#siebar-blog" data-bs-toggle="collapse">
+                                <i data-feather="edit"></i>
+                                <span> BLog </span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <div class="collapse" id="siebar-blog">
+                                <ul class="nav-second-level">
+                                    <li>
+                                        <a href="{{ route('blog_category.index') }}"><i data-feather="minus"></i>
+                                            Blog Category</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('blogs.index') }}"><i data-feather="minus"></i>
+                                            Blog</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <!-- nav items end -->
                         <!-- nav items -->
                         <li>
                             <a href="#siebar-sitesetting" data-bs-toggle="collapse">

@@ -39,6 +39,8 @@ use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\Admin\TagManagerController;
 use App\Http\Controllers\Admin\CouponCodeController;
 use App\Http\Controllers\Admin\DistrictController;
+use App\Http\Controllers\Admin\BlogController;
+use App\Http\Controllers\Admin\BlogCategoryController;
 
 Auth::routes();
 
@@ -119,6 +121,7 @@ Route::group(['prefix' => 'customer', 'namespace' => 'Frontend', 'middleware' =>
     Route::get('/order-track', [CustomerController::class, 'order_track'])->name('customer.order_track');
     Route::get('/order-track/result', [CustomerController::class, 'order_track_result'])->name('customer.order_track_result');
 });
+
 // customer auth
 Route::group(['prefix' => 'customer', 'namespace' => 'Frontend', 'middleware' => ['customer', 'ipcheck', 'check_refer']], function () {
 
@@ -408,6 +411,26 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'lock', 'check_re
     Route::post('banner/inactive', [BannerController::class, 'inactive'])->name('banners.inactive');
     Route::post('banner/active', [BannerController::class, 'active'])->name('banners.active');
     Route::post('banner/destroy', [BannerController::class, 'destroy'])->name('banners.destroy');
+
+    // blog  route
+    Route::get('blog/manage', [BlogController::class, 'index'])->name('blogs.index');
+    Route::get('blog/create', [BlogController::class, 'create'])->name('blogs.create');
+    Route::post('blog/save', [BlogController::class, 'store'])->name('blogs.store');
+    Route::get('blog/{id}/edit', [BlogController::class, 'edit'])->name('blogs.edit');
+    Route::post('blog/update', [BlogController::class, 'update'])->name('blogs.update');
+    Route::post('blog/inactive', [BlogController::class, 'inactive'])->name('blogs.inactive');
+    Route::post('blog/active', [BlogController::class, 'active'])->name('blogs.active');
+    Route::post('blog/destroy', [BlogController::class, 'destroy'])->name('blogs.destroy');
+
+    // blog category route
+    Route::get('blog-category/manage', [BlogCategoryController::class, 'index'])->name('blog_category.index');
+    Route::get('blog-category/create', [BlogCategoryController::class, 'create'])->name('blog_category.create');
+    Route::post('blog-category/save', [BlogCategoryController::class, 'store'])->name('blog_category.store');
+    Route::get('blog-category/{id}/edit', [BlogCategoryController::class, 'edit'])->name('blog_category.edit');
+    Route::post('blog-category/update', [BlogCategoryController::class, 'update'])->name('blog_category.update');
+    Route::post('blog-category/inactive', [BlogCategoryController::class, 'inactive'])->name('blog_category.inactive');
+    Route::post('blog-category/active', [BlogCategoryController::class, 'active'])->name('blog_category.active');
+    Route::post('blog-category/destroy', [BlogCategoryController::class, 'destroy'])->name('blog_category.destroy');
 
     // contact route
     Route::get('page/manage', [CreatePageController::class, 'index'])->name('pages.index');

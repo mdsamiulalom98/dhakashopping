@@ -99,6 +99,7 @@ p {
 .mobile-header {
     display: none;
 }
+
 /* main-header */
 .main-header {
     position: fixed;
@@ -1844,17 +1845,18 @@ footer {
 }
 
 .footer-logo-wrapper {
-    padding-right: 70px;
+    padding-right: 0;
     width: 100%;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 50px;
+    margin-bottom: 0;
 }
 
 .footer-logo-wrapper a {
     display: block;
+    color: #fff;
 }
 
 .footer-logo-wrapper a img {
@@ -1864,10 +1866,12 @@ footer {
 
 .footer-logo-wrapper p {
     color: #fff;
-    text-align: center;
-    width: 80%;
+    text-align: left;
+    width: 100%;
     margin: 0;
     margin-top: 20px;
+    display: flex;
+    gap: 5px;
 }
 
 .footer-about-wrapper {
@@ -1983,6 +1987,10 @@ footer {
     color: #fff;
     padding: 30px 0;
     margin: 0;
+}
+
+.footer-bottom .copyright p a {
+    color: var(--primary-color);
 }
 
 .scrolltop {

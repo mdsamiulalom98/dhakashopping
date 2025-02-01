@@ -16,7 +16,7 @@
         <div class="row">
             <div class="col-sm-6 cus-order-2">
                 <div class="checkout-shipping">
-                    <form action="{{ route('customer.ordersave') }}" method="POST" data-parsley-validate="">
+                    <form action="{{ route('customer.ordersave') }}" id="checkoutForm" method="POST" data-parsley-validate="">
                         @csrf
                         <div class="card">
                             <div class="card-header">
@@ -131,11 +131,6 @@
                                                     </label>
                                                 </div>
                                             @endif
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <div class="form-group">
-                                            <button class="order_place" type="submit">Confirm Order</button>
                                         </div>
                                     </div>
                                 </div>

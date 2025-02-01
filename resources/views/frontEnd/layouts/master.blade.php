@@ -400,6 +400,9 @@
                                                     href="{{ route('page', ['slug' => $page->slug]) }}">{{ $page->name }}</a>
                                             </li>
                                         @endforeach
+                                        <li><a
+                                            href="{{ route('blogs') }}">Blogs</a>
+                                    </li>
                                     </ul>
                                 </div>
 

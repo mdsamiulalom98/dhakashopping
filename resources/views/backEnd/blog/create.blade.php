@@ -96,54 +96,6 @@
                         </div>
                     </div>
                     <!-- col-end -->
-                    <div class="col-sm-12">
-                        <div class="form-group mb-3">
-                            <label for="description2" class="form-label">Description Two *</label>
-                            <textarea type="text" class="summernote form-control @error('description2') is-invalid @enderror" name="description2" rows="6" value="{{ old('description2') }}"  id="description2"></textarea>
-                            @error('description2')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                    </div>
-                    <!-- col-end -->
-                    <div class="col-sm-12">
-                        <div class="form-group mb-3">
-                            <label for="description3" class="form-label">Description Three*</label>
-                            <textarea type="text" class="summernote form-control @error('description3') is-invalid @enderror" name="description3" rows="6" value="{{ old('description3') }}"  id="description3"></textarea>
-                            @error('description3')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                    </div>
-                    <!-- col-end -->
-                    <div class="col-sm-12">
-                        <div class="form-group mb-3">
-                            <label for="description4" class="form-label">Description Four*</label>
-                            <textarea type="text" class="summernote form-control @error('description4') is-invalid @enderror" name="description4" rows="6" value="{{ old('description4') }}"  id="description4"></textarea>
-                            @error('description4')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                    </div>
-                    <!-- col-end -->
-                    <div class="col-sm-12">
-                        <div class="form-group mb-3">
-                            <label for="description5" class="form-label">Description Five*</label>
-                            <textarea type="text" class="summernote form-control @error('description5') is-invalid @enderror" name="description5" rows="6" value="{{ old('description5') }}"  id="description5"></textarea>
-                            @error('description5')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                    </div>
-                    <!-- col-end -->
                     <div class="col-sm-6 mb-3">
                         <div class="form-group">
                             <label for="status" class="d-block">Status</label>

@@ -26,6 +26,8 @@ use App\Models\Payment;
 use App\Models\Order;
 use App\Models\Review;
 use App\Models\Brand;
+use App\Models\BlogCategory;
+use App\Models\Blog;
 
 class FrontendController extends Controller
 {
@@ -515,4 +517,24 @@ class FrontendController extends Controller
             echo $data;
         }
     }
+
+    public function blog_categories($slug)
+    {
+        $category = BlogCategory::where('slug', $slug)->first();
+        $blog_categories = BlogCategory::where('status', 1)->get();
+        $blogs = Blog::where(['status' => 1, 'category_id' => $category->id])->get();
+        return view('frontEnd.layouts.pages.blog_category', compact('category', 'blog_categories', 'blogs'));
+    }
+    public function blogs()
+    {
+        $blog_categories = BlogCategory::where('status', 1)->get();
+        $blogs = Blog::where('status', 1)->get();
+        return view('frontEnd.layouts.pages.blogs', compact('blog_categories', 'blogs'));
+    }
+
+    public function blog_details($slug) {
+        $blog_categories = BlogCategory::where('status', 1)->get();
+        $details = Blog::where('slug', $slug)->first();
+        return view('frontEnd.layouts.pages.blog_details', compact('details', 'blog_categories'));
+    } 
 }

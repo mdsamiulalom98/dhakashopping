@@ -52,6 +52,11 @@ Route::get('/cc', function () {
     return "Cleared!";
 });
 
+Route::get('/migrate', function () {
+    Artisan::call('migrate');
+    return "Model Created!";
+});
+
 Route::post('/customer/coupon', [CustomerController::class, 'customer_coupon'])->name('customer.coupon');
 Route::post('/customer/coupon-remove', [CustomerController::class, 'coupon_remove'])->name('customer.coupon_remove');
 
@@ -81,6 +86,10 @@ Route::group(['namespace' => 'Frontend', 'middleware' => ['ipcheck', 'check_refe
     Route::get('/payment-cancel', [FrontEndController::class, 'payment_cancel'])->name('payment_cancel');
 
     Route::get('variable-view', [FrontEndController::class, 'variable_view'])->name('variable_view');
+
+    Route::get('blogs', [FrontEndController::class, 'blogs'])->name('blogs');
+    Route::get('blog-category/{slug}', [FrontendController::class, 'blog_categories'])->name('blog.categories');
+    Route::get('blog-details/{slug}', [FrontendController::class, 'blog_details'])->name('blog.details');
 
     // cart route
     Route::post('cart/store', [ShoppingController::class, 'cart_store'])->name('cart.store');

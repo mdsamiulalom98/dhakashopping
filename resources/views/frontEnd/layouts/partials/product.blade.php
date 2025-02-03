@@ -28,17 +28,17 @@
             <div class="product-price-wrapper">
                 @if ($value->variable_count > 0 && $value->type == 0)
                     <p>
+                        ৳ {{ $value->variable->new_price }}
                         @if ($value->variable->old_price)
                             <del>৳ {{ $value->variable->old_price }}</del>
                         @endif
-                        ৳ {{ $value->variable->new_price }}
                     </p>
                 @else
                     <p>
+                        ৳ {{ $value->new_price }}
                         @if ($value->old_price)
                             <del>৳ {{ $value->old_price }}</del>
                         @endif
-                        ৳ {{ $value->new_price }}
                     </p>
                 @endif
             </div>
@@ -46,14 +46,14 @@
                 @if ($value->variable_count > 0 && $value->type == 0)
                     <div class="cart_btn">
                         <button  data-id="{{ $value->id }}"
-                            class="variable-modal"> Add</button>
+                            class="variable-modal"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
                     </div>
                 @else
                     <div class="cart_btn">
                         <form action="{{ route('cart.store') }}" method="POST">
                             @csrf
                             <input type="hidden" name="id" value="{{ $value->id }}" />
-                            <button type="submit"> Add</button>
+                            <button type="submit"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
                         </form>
                     </div>
                 @endif

@@ -40,6 +40,7 @@
         </div>
     </section>
     <!-- slider end -->
+    {{--
 
     <!-- specialty starts -->
     <div class="specialty-section">
@@ -104,7 +105,7 @@
                     <div class="category-title">
                         <h3>Top Categories</h3>
                     </div>
-                    <div class="category-item-wrapper">
+                    <div class="category-item-wrapper" >
                         @foreach ($homecategories as $key => $value)
                             <div class="cat-item">
                                 <div class="cat-img">
@@ -125,39 +126,37 @@
         </div>
     </div>
 
-    @foreach ($homecategory as $key => $homecat)
-        <section class="homeproduct {{ $key % 2 == 0 ? 'odd' : 'even' }}">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="section-title">
-                            <h3><a href="{{ route('category', $homecat->slug) }}">{{ $homecat->name }} </a></h3>
-                            <a href="{{ route('category', $homecat->slug) }}" class="view_all">See All</a>
-                        </div>
+    --}}
+
+    <section class="homeproduct ">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="home-product-categories">
+                        <input type="hidden" id="category_id" name="category_id" value="">
+                        @foreach ($front_categories as $key => $value)
+                            <button class="filter-btn" data-category="{{ $value->id }}">
+                                {{ $value->name }}
+                            </button>
+                        @endforeach
                     </div>
-                    @php
-                        $products = App\Models\Product::where(['status' => 1, 'category_id' => $homecat->id])
-                            ->orderBy('id', 'DESC')
-                            ->select('id', 'name', 'slug', 'new_price', 'old_price', 'type', 'category_id')
-                            ->withCount('variable')
-                            ->limit(12)
-                            ->get();
-                    @endphp
-                    <div class="col-sm-12">
-                        <div class="product_slider owl-carousel">
-                            @foreach ($products as $key => $value)
-                                <div class="product_item wist_item">
-                                    @include('frontEnd.layouts.partials.product')
-                                </div>
-                            @endforeach
-                        </div>
+                </div>
+
+
+                <div class="col-sm-12">
+                    <div class="home-products" id="product-list">
+                        @foreach ($products as $key => $value)
+                            <div class="product_item wist_item">
+                                @include('frontEnd.layouts.partials.product')
+                            </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
-        </section>
-    @endforeach
+        </div>
+    </section>
 
-    <div class="home-category mt-4">
+    {{-- <div class="home-category mt-4">
         <div class="container">
             <div class="row">
                 <div class="col-sm-12">
@@ -176,7 +175,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <div class="footer-gap"></div>
 @endsection
@@ -298,5 +297,73 @@
                 }
             });
         });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $(".filter-btn").on("click", function() {
+                let categoryId = $(this).data("category");
+                $('.filter-btn').removeClass('active');
+                $(this).addClass('active');
+                $('#category_id').val(categoryId);
+
+                $.ajax({
+                    url: "{{ route('filter.products') }}", // Adjust the route name
+                    method: "GET",
+                    data: {
+                        category_id: categoryId
+                    },
+                    success: function(response) {
+                        $("#product-list").html(response);
+                    },
+                    error: function() {
+                        alert("Something went wrong!");
+                    }
+                });
+            });
+        });
+    </script>
+    <script>
+        let page = 1;
+        let loading = false;
+
+        function isMobile() {
+            return window.innerWidth <= 768;
+        }
+
+        function getScrollTriggerHeight() {
+            return isMobile() ? 1200 : 400;
+        }
+        $(window).scroll(function() {
+            if ($(window).scrollTop() + $(window).height() >= $(document).height() - getScrollTriggerHeight()) {
+                if (!loading) {
+                    loading = true;
+                    $('#loading-bar').show();
+                    page++;
+                    loadMoreNews(page);
+                }
+            }
+        });
+
+        function loadMoreNews(page) {
+
+            var category_id = $('#category_id').val();
+            $.ajax({
+                url: '{{ route('products.loadmore') }}',
+                type: 'GET',
+                data: {
+                    page: page,
+                    category_id: category_id
+                },
+                success: function(response) {
+                    if (response) {
+                        $('#product-list').append(response);
+                        loading = false;
+                        $('#loading-bar').hide();
+                    } else {
+                        $('#loading-bar').hide();
+                    }
+                }
+            });
+        }
     </script>
 @endpush

@@ -82,8 +82,6 @@ class ShoppingController extends Controller
             ],
         ]);
 
-
-
         Toastr::success('Product successfully add to cart', 'Success!');
         if ($request->add_cart) {
             return back();
@@ -185,7 +183,6 @@ class ShoppingController extends Controller
         return view('frontEnd.layouts.ajax.mobilecart_qty', compact('data'));
     }
 
-
     public function cart_increment_camp(Request $request)
     {
         $item = Cart::instance('shopping')->get($request->id);
@@ -211,5 +208,10 @@ class ShoppingController extends Controller
     public function mini_cart(Request $request){
         $data = Cart::instance('shopping')->content();
         return view('frontEnd.layouts.partials.mini_cart', compact('data'));
+    }
+
+    public function cart_show() {
+        $data = [];
+        return view('frontEnd.layouts.pages.cart', compact('data'));
     }
 }

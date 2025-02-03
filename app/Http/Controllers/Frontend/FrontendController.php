@@ -33,7 +33,6 @@ class FrontendController extends Controller
 {
     public function index()
     {
-
         $sliders = Banner::where(['status' => 1, 'category_id' => 1])
             ->select('id', 'image', 'link')
             ->get();
@@ -72,18 +71,42 @@ class FrontendController extends Controller
             ->limit(12)
             ->get();
 
-        $homecategory = Category::where(['front_view' => 1, 'status' => 1])
-            ->select('id', 'name', 'slug', 'front_view', 'status')
-            ->orderBy('id', 'ASC')
-            ->get();
-
         $brands = Brand::where(['status' => 1])
             ->orderBy('id', 'ASC')
             ->get();
 
         $homecategories = Category::where('status', 1)->select('id', 'name', 'slug', 'image')->get();
 
-        return view('frontEnd.layouts.pages.index', compact('sliders', 'specialty_banners', 'hotdeal_top', 'homecategory', 'sliderrightads', 'brands', 'most_discounted_product', 'homecategories'));
+        $front_categories = Category::where(['front_view' => 1, 'status' => 1])->select('id', 'name')->get();
+
+        $products = Product::where('status', 1)->select('id', 'name', 'slug', 'new_price', 'old_price', 'type', 'category_id', 'flash_deal', 'topsale');
+        $products = $products->limit(12)->get();
+        return view('frontEnd.layouts.pages.index', compact('sliders', 'specialty_banners', 'hotdeal_top', 'sliderrightads', 'brands', 'most_discounted_product', 'homecategories', 'products', 'front_categories'));
+    }
+
+    public function filter_products(Request $request)
+    {
+        $categoryId = $request->category_id;
+        $products = Product::where('category_id', $categoryId)->get();
+        return view('frontEnd.layouts.partials.products', compact('products'));
+    }
+
+    public function loadMoreProducts(Request $request)
+    {
+        $page = $request->page;
+        $perPage = 6;
+
+        $products = Product::where(['status' => 1]);
+
+        if ($request->category_id) {
+            $products = $products->where('id', $request->category_id);
+        }
+
+        $products = $products->skip($page * $perPage)
+            ->take($perPage)
+            ->get();
+
+        return view('frontEnd.layouts.partials.products', compact('products'))->render();
     }
 
     public function category($slug, Request $request)
@@ -532,9 +555,16 @@ class FrontendController extends Controller
         return view('frontEnd.layouts.pages.blogs', compact('blog_categories', 'blogs'));
     }
 
-    public function blog_details($slug) {
+    public function blog_details($slug)
+    {
         $blog_categories = BlogCategory::where('status', 1)->get();
         $details = Blog::where('slug', $slug)->first();
         return view('frontEnd.layouts.pages.blog_details', compact('details', 'blog_categories'));
-    } 
+    }
+
+    public function flash_deals()
+    {
+        $products = Product::where(['flash_deal' => 1, 'status' => 1])->select('id', 'name', 'slug', 'new_price', 'old_price', 'type', 'category_id', 'flash_deal', 'topsale')->paginate(50);
+        return view('frontEnd.layouts.pages.flashdeal', compact('products'));
+    }
 }

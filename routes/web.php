@@ -84,12 +84,15 @@ Route::group(['namespace' => 'Frontend', 'middleware' => ['ipcheck', 'check_refe
     Route::get('stock-check', [FrontendController::class, 'stock_check'])->name('stock_check');
     Route::get('/payment-success', [FrontEndController::class, 'payment_success'])->name('payment_success');
     Route::get('/payment-cancel', [FrontEndController::class, 'payment_cancel'])->name('payment_cancel');
-
+    Route::get('flash-deals', [FrontendController::class, 'flash_deals'])->name('flash.deals');
     Route::get('variable-view', [FrontEndController::class, 'variable_view'])->name('variable_view');
 
     Route::get('blogs', [FrontEndController::class, 'blogs'])->name('blogs');
     Route::get('blog-category/{slug}', [FrontendController::class, 'blog_categories'])->name('blog.categories');
     Route::get('blog-details/{slug}', [FrontendController::class, 'blog_details'])->name('blog.details');
+
+    Route::get('ajax-filter-products', [FrontendController::class, 'filter_products'])->name('filter.products');
+    Route::get('/load-more', [FrontendController::class, 'loadMoreProducts'])->name('products.loadmore');
 
     // cart route
     Route::post('cart/store', [ShoppingController::class, 'cart_store'])->name('cart.store');

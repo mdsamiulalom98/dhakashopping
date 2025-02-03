@@ -21,8 +21,8 @@
     <!-- toastr css -->
     <link rel="stylesheet" href="{{ asset('public/backEnd/') }}/assets/css/toastr.min.css" />
     <link rel="stylesheet" href="{{ asset('public/frontEnd/css/wsit-menu.css') }}" />
-    <link rel="stylesheet" href="{{ asset('public/frontEnd/css/style.css?v=1.0.1') }}" />
-    <link rel="stylesheet" href="{{ asset('public/frontEnd/css/responsive.css?v=1.0.1') }}" />
+    <link rel="stylesheet" href="{{ asset('public/frontEnd/css/style.css?v=1.0.5') }}" />
+    <link rel="stylesheet" href="{{ asset('public/frontEnd/css/responsive.css?v=1.0.5') }}" />
     <script src="{{ asset('public/frontEnd/js/jquery-3.7.1.min.js') }}"></script>
     @foreach ($pixels as $pixel)
         <!-- Facebook Pixel Code -->
@@ -120,22 +120,33 @@
                         <span class="menu-category-toggle">
                             <i class="fa fa-caret-down"></i>
                         </span>
+                        <ul class="second-nav" style="display: none;">
+                            @foreach ($scategory->subcategories as $subcategory)
+                                <li class="parent-subcategory">
+                                    <a href="{{ route('subcategory', $subcategory->slug) }}"
+                                        class="menu-subcategory-name">
+                                        {{ $subcategory->name }}
+                                    </a>
+                                    @if ($subcategory->childcategories->count() > 0)
+                                        <ul class="third-nav">
+                                            @foreach ($subcategory->childcategories as $childcat)
+                                                <li class="childcategory">
+                                                    <a href="{{ route('products', $childcat->slug) }}"
+                                                        class="menu-childcategory-name">
+                                                        {{ $childcat->name }}
+                                                    </a>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    @endif
+                                </li>
+                            @endforeach
+                        </ul>
                     @endif
-                    <ul class="second-nav" style="display: none;">
-                        @foreach ($scategory->subcategories as $subcategory)
-                            <li class="parent-subcategory">
-                                <a href="{{ route('subcategory', $subcategory->slug) }}"
-                                    class="menu-subcategory-name">{{ $subcategory->name }}</a>
-                                @foreach ($subcategory->childcategories as $childcat)
-                            <li class="childcategory"><a href="{{ route('products', $childcat->slug) }}"
-                                    class="menu-childcategory-name">{{ $childcat->name }}</a></li>
-                        @endforeach
                 </li>
             @endforeach
         </ul>
-        </li>
-        @endforeach
-        </ul>
+
         <div class="mobilemenu-bottom">
             <ul>
                 @if (Auth::guard('customer')->user())
@@ -166,28 +177,28 @@
         <!-- mobile header start -->
         <div class="mobile-header sticky ">
             <div class="mobile-logo">
-                <div class="menu-bar">
-                    <a class="toggle">
-                        <i class="fa-solid fa-bars"></i>
-                    </a>
-                </div>
                 <div class="menu-logo">
                     <a href="{{ route('home') }}"><img src="{{ asset($generalsetting->dark_logo) }}"
                             alt="" /></a>
                 </div>
                 <div class="menu-bag">
-                    <a class="margin-shopping cart-toggle">
-                        <i class="fa-solid fa-cart-shopping"></i>
-                        <span class="mobilecart-qty">{{ Cart::instance('shopping')->count() }}</span>
+                    <a class="margin-shopping ">
+                        <i class="fa-solid fa-bell"></i>
+
+                    </a>
+                </div>
+                <div class="menu-bar">
+                    <a class="toggle">
+                        <i class="fa-solid fa-sliders"></i>
                     </a>
                 </div>
             </div>
         </div>
         <div class="mobile-search main-search ">
             <form action="{{ route('search') }}">
+                <button><i data-feather="search"></i></button>
                 <input type="text" placeholder="Search Product..." class="search_keyword search_click"
                     name="keyword" />
-                <button><i data-feather="search"></i></button>
             </form>
             <div class="search_result"></div>
         </div>
@@ -400,9 +411,8 @@
                                                     href="{{ route('page', ['slug' => $page->slug]) }}">{{ $page->name }}</a>
                                             </li>
                                         @endforeach
-                                        <li><a
-                                            href="{{ route('blogs') }}">Blogs</a>
-                                    </li>
+                                        <li><a href="{{ route('blogs') }}">Blogs</a>
+                                        </li>
                                     </ul>
                                 </div>
 
@@ -463,6 +473,58 @@
         </div>
     </div>
     <!-- content end -->
+
+
+    <!-- footer navigation start -->
+    <div class="footer_nav">
+        <ul>
+            <li>
+                <a href="{{ route('home') }}">
+                    <span class="mb__view__memu">
+                        <i class="fa-solid fa-house"></i>
+                    </span>
+                    <span class="mb__view__memu">Home</span>
+                </a>
+            </li>
+
+            <li>
+                <a class="cart-toggle">
+                    <span>
+                        <i class="fa-solid fa-shopping-bag"></i>
+                    </span>
+                    <span>Cart</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ route('flash.deals') }}">
+                    <span>
+                        <i class="fa-solid fa-cart-shopping"></i>
+                    </span>
+                    <span>Flash Sell</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('contact') }}">
+                    <span>
+                        <i class="fa-solid fa-message"></i>
+                    </span>
+                    <span>Message</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('customer.login') }}">
+                    <span>
+                        <i class="fa-solid fa-user"></i>
+                    </span>
+                    <span>Login</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!-- footer navigation end -->
+
+
 
     <div class="fixed_whats">
         <a href="https://api.whatsapp.com/send?phone={{ $contact->whatsapp }}" target="_blank"><i
@@ -837,6 +899,11 @@
 
         $(document).on('click', '.mini-close-button', function(e) {
             $(".mini-cart-wrapper").removeClass("active");
+            $("#page-overlay").hide();
+        });
+
+        $(document).on('click', '.close-variable-button', function(e) {
+            $("#variable-modal").hide();
             $("#page-overlay").hide();
         });
     </script>

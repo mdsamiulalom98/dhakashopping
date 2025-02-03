@@ -41,6 +41,7 @@ use App\Http\Controllers\Admin\CouponCodeController;
 use App\Http\Controllers\Admin\DistrictController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\BlogCategoryController;
+use App\Http\Controllers\Admin\PrescriptionController;
 
 Auth::routes();
 
@@ -136,17 +137,20 @@ Route::group(['prefix' => 'customer', 'namespace' => 'Frontend', 'middleware' =>
 
 // customer auth
 Route::group(['prefix' => 'customer', 'namespace' => 'Frontend', 'middleware' => ['customer', 'ipcheck', 'check_refer']], function () {
+    Route::get('prescription', [CustomerController::class, 'prescription_page'])->name('customer.prescription');
+    Route::post('prescription-upload', [CustomerController::class, 'prescription_upload'])->name('customer.prescription_upload');
+    Route::get('account', [CustomerController::class, 'account'])->name('customer.account');
+    Route::get('monthly-reminder', [CustomerController::class, 'monthly_reminder'])->name('customer.monthly_reminder');
+    Route::post('reminder-save', [CustomerController::class, 'reminder_save'])->name('customer.reminder_save');
 
-    Route::get('/account', [CustomerController::class, 'account'])->name('customer.account');
-
-    Route::get('/orders', [CustomerController::class, 'orders'])->name('customer.orders');
-    Route::get('/invoice', [CustomerController::class, 'invoice'])->name('customer.invoice');
-    Route::get('/pdf-reader', [CustomerController::class, 'pdfreader'])->name('customer.pdfreader');
-    Route::get('/invoice/order-note', [CustomerController::class, 'order_note'])->name('customer.order_note');
-    Route::get('/profile-edit', [CustomerController::class, 'profile_edit'])->name('customer.profile_edit');
-    Route::post('/profile-update', [CustomerController::class, 'profile_update'])->name('customer.profile_update');
-    Route::get('/change-password', [CustomerController::class, 'change_pass'])->name('customer.change_pass');
-    Route::post('/password-update', [CustomerController::class, 'password_update'])->name('customer.password_update');
+    Route::get('orders', [CustomerController::class, 'orders'])->name('customer.orders');
+    Route::get('invoice', [CustomerController::class, 'invoice'])->name('customer.invoice');
+    Route::get('pdf-reader', [CustomerController::class, 'pdfreader'])->name('customer.pdfreader');
+    Route::get('invoice/order-note', [CustomerController::class, 'order_note'])->name('customer.order_note');
+    Route::get('profile-edit', [CustomerController::class, 'profile_edit'])->name('customer.profile_edit');
+    Route::post('profile-update', [CustomerController::class, 'profile_update'])->name('customer.profile_update');
+    Route::get('change-password', [CustomerController::class, 'change_pass'])->name('customer.change_pass');
+    Route::post('password-update', [CustomerController::class, 'password_update'])->name('customer.password_update');
 });
 
 Route::group(['namespace' => 'Frontend', 'middleware' => ['ipcheck', 'check_refer']], function () {
@@ -403,6 +407,14 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'lock', 'check_re
     Route::post('contact/inactive', [ContactController::class, 'inactive'])->name('contact.inactive');
     Route::post('contact/active', [ContactController::class, 'active'])->name('contact.active');
     Route::post('contact/destroy', [ContactController::class, 'destroy'])->name('contact.destroy');
+
+    // contact route
+    Route::get('prescription/manage', [PrescriptionController::class, 'index'])->name('prescription.index');
+    Route::get('prescription/view', [PrescriptionController::class, 'view'])->name('prescription.view');
+    Route::get('prescription/ajax-view', [PrescriptionController::class, 'ajax_view'])->name('prescription.ajax.view');
+    Route::post('prescription/inactive', [PrescriptionController::class, 'inactive'])->name('prescription.inactive');
+    Route::post('prescription/active', [PrescriptionController::class, 'active'])->name('prescription.active');
+    Route::post('prescription/destroy', [PrescriptionController::class, 'destroy'])->name('prescription.destroy');
 
     // banner category route
     Route::get('banner-category/manage', [BannerCategoryController::class, 'index'])->name('banner_category.index');

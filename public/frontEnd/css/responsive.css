@@ -416,6 +416,14 @@
     header .toggle {
         margin-top: 0;
         padding-left: 0;
+        position: relative;
+        width: 100%;
+        background-color: var(--primary-color);
+        display: flex;
+        border-radius: 5px;
+        height: 35px;
+        justify-content: center;
+        align-items: center;
     }
 
     .main-search.mobile-search {
@@ -639,7 +647,7 @@
 
     .mobile-logo {
         display: grid;
-        grid-template-columns: 5fr 40px 40px;
+        grid-template-columns: 5fr 40px 40px 40px;
         text-align: center;
         font-size: 16px;
         height: 60px;
@@ -687,16 +695,17 @@
 
     .menu-bar a i {
         font-size: 15px;
-        background-color: var(--primary-color);
-        display: inline-block;
-        padding: 9px 10px;
-        border-radius: 5px;
         color: #fff;
     }
 
     .menu-bag .margin-shopping {
         position: relative;
-        width: 30px;
+        width: 100%;
+        display: block;
+        background-color: var(--primary-color);
+        display: inline-block;
+        border-radius: 5px;
+        height: 35px;
     }
 
     .menu-bag .margin-shopping span {
@@ -811,7 +820,7 @@
 
     .footer-logo-wrapper {
         padding-right: 0px;
-        margin-bottom: 40px;
+        margin-bottom: 0px;
     }
 
     .banner-right .item-1 {
@@ -846,6 +855,13 @@
 
     .footer-bottom {
         padding: 12px 0;
+        margin-bottom: 70px;
+    }
+
+    .footer-bottom .copyright p {
+        color: #fff;
+        padding: 10px 0;
+        margin: 0;
     }
 
     .footer-about p {
@@ -935,11 +951,7 @@
     .footer-top {
         padding-bottom: 25px;
         padding-top: 25px;
-    }
-
-    .footer-top {
         margin-left: 0px;
-        padding-top: 70px;
     }
 
     .main-search form button {

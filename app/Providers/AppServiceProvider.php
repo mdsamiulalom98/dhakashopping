@@ -13,6 +13,7 @@ use App\Models\EcomPixel;
 use App\Models\GoogleTagManager;
 use App\Models\CouponCode;
 use App\Models\Order;
+use App\Models\Prescription;
 use Illuminate\Support\Facades\Cache;
 
 class AppServiceProvider extends ServiceProvider
@@ -72,6 +73,7 @@ class AppServiceProvider extends ServiceProvider
             $categories = Category::where('status', 1)->select('id', 'name', 'slug', 'status', 'image')->get();
             $neworder = Order::where('order_status', '1')->count();
             $pendingorder = Order::where('order_status', '1')->latest()->limit(9)->get();
+            $pending_prescs_count = Prescription::where('status', 0)->select('id', 'status')->count();
 
             $view->with([
                 'generalsetting' => $generalsetting,
@@ -85,6 +87,7 @@ class AppServiceProvider extends ServiceProvider
                 'orderstatus' => $orderstatus,
                 'pixels' => $pixels,
                 'gtm_code' => $gtm_code,
+                'pending_prescs_count' => $pending_prescs_count
             ]);
         });
     }

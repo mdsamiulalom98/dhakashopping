@@ -96,6 +96,14 @@
                             </a>
                         </div>
                     </li>
+                    <li class="dropdown notification-list topbar-dropdown">
+                        <a class="nav-link "
+                            href="{{ route('prescription.index') }}">
+                            <i class="fe-file-text noti-icon"></i>
+                            <span class="badge bg-danger rounded-circle noti-icon-badge">{{ $pending_prescs_count }}</span>
+                        </a>
+
+                    </li>
 
                     <li class="dropdown notification-list topbar-dropdown">
                         <a class="nav-link dropdown-toggle nav-user me-0 waves-effect waves-light"

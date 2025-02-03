@@ -79,23 +79,23 @@
     {{--
     @if ($coupon)
     <div class="coupon-section alert alert-dismissible fade show">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="coupon-code">
-                            <p>Get {{ $coupon->amount }} {{ $coupon->type == 1 ? '%' : 'Tk' }} Discount use the coupon
-                                code <span id="couponCode">{{ $coupon->coupon_code }}</span>
-                                <button onclick="copyCouponCode()"> <i class="fas fa-copy"></i>
-                                </button>
-                            </p>
-                        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="coupon-code">
+                        <p>Get {{ $coupon->amount }} {{ $coupon->type == 1 ? '%' : 'Tk' }} Discount use the coupon
+                            code <span id="couponCode">{{ $coupon->coupon_code }}</span>
+                            <button onclick="copyCouponCode()"> <i class="fas fa-copy"></i>
+                            </button>
+                        </p>
                     </div>
                 </div>
             </div>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-        @endif
-        --}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @endif
+    --}}
     @php
         $cartdata = Gloudemans\Shoppingcart\Facades\Cart::instance('shopping');
         $subtotal = $cartdata->subtotal();
@@ -182,6 +182,11 @@
                             alt="" /></a>
                 </div>
                 <div class="menu-bag">
+                    <a href="{{ route('customer.prescription') }}" class="margin-shopping ">
+                        <i class="fa-solid fa-notes-medical"></i>
+                    </a>
+                </div>
+                <div class="menu-bag">
                     <a class="margin-shopping ">
                         <i class="fa-solid fa-bell"></i>
 
@@ -242,14 +247,15 @@
                                             <div class="header-account">
                                                 <a href="{{ route('customer.account') }}">
                                                     <i class="fa-regular fa-user"></i>
-                                                    <span>Hello, {{ $customerInfo->name ?? '' }}</span>
+                                                </a>
+                                                <a href="{{ route('customer.prescription') }}">
+                                                    <i class="fa-notes-medical fa-solid"></i>
                                                 </a>
                                             </div>
                                         @else
                                             <div class="header-account">
                                                 <a href="{{ route('customer.login') }}">
                                                     <i class="fa-regular fa-user"></i>
-                                                    <span>Hello, User</span>
                                                 </a>
                                             </div>
                                         @endif
@@ -387,51 +393,7 @@
                 <div class="footer-top">
                     <div class="container">
                         <div class="row">
-                            <div class="col-sm-3">
-                                <div class="footer-logo-wrapper">
-                                    <a href="{{ route('home') }}">
-                                        <img src="{{ asset($generalsetting->dark_logo) }}" alt="" />
-                                    </a>
-                                    <p>Address: {{ $contact->address }}</p>
-                                    <p>Hotline: <a href="tel:{{ $contact->hotline }}"
-                                            class="footer-hotlint">{{ $contact->hotline }}</a></p>
-                                    <p>Whatsapp: <a href="https://wa.me/{{ $contact->whatsapp }}"
-                                            class="footer-hotlint">{{ $contact->whatsapp }}</a></p>
 
-                                </div>
-
-                            </div>
-                            <!-- col end -->
-                            <div class="col-sm-3">
-                                <div class="footer-menu">
-                                    <ul>
-                                        <li class="title "><a>Useful Link</a></li>
-                                        @foreach ($pages as $page)
-                                            <li><a
-                                                    href="{{ route('page', ['slug' => $page->slug]) }}">{{ $page->name }}</a>
-                                            </li>
-                                        @endforeach
-                                        <li><a href="{{ route('blogs') }}">Blogs</a>
-                                        </li>
-                                    </ul>
-                                </div>
-
-                            </div>
-                            <!-- col end -->
-                            <div class="col-sm-3">
-                                <div class="footer-menu">
-                                    <ul>
-                                        <li class="title"><a>Customer Link</a></li>
-                                        <li><a href="{{ route('customer.register') }}">Register</a></li>
-                                        <li><a href="{{ route('customer.login') }}">Login</a></li>
-                                        <li><a href="{{ route('customer.forgot.password') }}">Forgot Password?</a>
-                                        </li>
-                                        <li><a href="{{ route('contact') }}">Contact</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <!-- col end -->
                             <div class="col-sm-3">
                                 <div class="footer-menu">
                                     <ul class="social_link">
@@ -450,6 +412,51 @@
                                     </ul>
 
                                 </div>
+                            </div>
+                            <!-- col end -->
+                            <div class="col-sm-3 col-6">
+                                <div class="footer-menu">
+                                    <ul>
+                                        <li class="title "><a>Useful Link</a></li>
+                                        @foreach ($pages as $page)
+                                            <li><a
+                                                    href="{{ route('page', ['slug' => $page->slug]) }}">{{ $page->name }}</a>
+                                            </li>
+                                        @endforeach
+                                        <li><a href="{{ route('blogs') }}">Blogs</a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </div>
+                            <!-- col end -->
+                            <div class="col-sm-3 col-6">
+                                <div class="footer-menu">
+                                    <ul>
+                                        <li class="title"><a>Customer Link</a></li>
+                                        <li><a href="{{ route('customer.register') }}">Register</a></li>
+                                        <li><a href="{{ route('customer.login') }}">Login</a></li>
+                                        <li><a href="{{ route('customer.forgot.password') }}">Forgot Password?</a>
+                                        </li>
+                                        <li><a href="{{ route('contact') }}">Contact</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- col end -->
+                            <div class="col-sm-3">
+                                <div class="footer-logo-wrapper">
+                                    <a href="{{ route('home') }}">
+                                        <img src="{{ asset($generalsetting->dark_logo) }}" alt="" />
+                                    </a>
+                                    <p>Address: {{ $contact->address }}</p>
+                                    <p>Hotline: <a href="tel:{{ $contact->hotline }}"
+                                            class="footer-hotlint">{{ $contact->hotline }}</a></p>
+                                    <p>Whatsapp: <a href="https://wa.me/{{ $contact->whatsapp }}"
+                                            class="footer-hotlint">{{ $contact->whatsapp }}</a></p>
+
+                                </div>
+
                             </div>
                             <!-- col end -->
                         </div>
@@ -478,7 +485,7 @@
     <!-- footer navigation start -->
     <div class="footer_nav">
         <ul>
-            <li>
+            <li class="{{ request()->is('/') ? 'active' : '' }}">
                 <a href="{{ route('home') }}">
                     <span class="mb__view__memu">
                         <i class="fa-solid fa-house"></i>
@@ -487,7 +494,7 @@
                 </a>
             </li>
 
-            <li>
+            <li class="{{ request()->is('/') ? 'active' : '' }}">
                 <a class="cart-toggle">
                     <span>
                         <i class="fa-solid fa-shopping-bag"></i>
@@ -496,7 +503,7 @@
                 </a>
             </li>
 
-            <li>
+            <li class="{{ request()->is('flash-deals') ? 'active' : '' }}">
                 <a href="{{ route('flash.deals') }}">
                     <span>
                         <i class="fa-solid fa-cart-shopping"></i>
@@ -504,7 +511,7 @@
                     <span>Flash Sell</span>
                 </a>
             </li>
-            <li>
+            <li class="{{ request()->is('site/contact-us') ? 'active' : '' }}">
                 <a href="{{ route('contact') }}">
                     <span>
                         <i class="fa-solid fa-message"></i>
@@ -512,7 +519,7 @@
                     <span>Message</span>
                 </a>
             </li>
-            <li>
+            <li class="{{ request()->is('customer/login') ? 'active' : '' }}">
                 <a href="{{ route('customer.login') }}">
                     <span>
                         <i class="fa-solid fa-user"></i>
@@ -573,7 +580,8 @@
 
 
     <script src="{{ asset('public/backEnd/') }}/assets/js/toastr.min.js"></script>
-    {!! \Brian2694\Toastr\Facades\Toastr::message() !!} @stack('script')
+    {!! \Brian2694\Toastr\Facades\Toastr::message() !!}
+    @stack('script')
     <script>
         $(".quick_view").on("click", function() {
             var id = $(this).data("id");
